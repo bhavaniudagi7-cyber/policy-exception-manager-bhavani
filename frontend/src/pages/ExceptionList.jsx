@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
-import { useAuth } from "../context/AuthContext";
 
 function ExceptionList() {
   const [exceptions, setExceptions] = useState([]);
@@ -13,8 +12,6 @@ function ExceptionList() {
   const [status, setStatus] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-
-  const { logout } = useAuth();
 
   const fetchExceptions = async () => {
     try {
@@ -47,14 +44,21 @@ function ExceptionList() {
 
   return (
     <div style={{ padding: "30px" }}>
-      <button onClick={logout}>Logout</button>
+      <button
+        onClick={() => {
+          localStorage.removeItem("token");
+          window.location.href = "/login";
+        }}
+      >
+        Logout
+      </button>
 
       <h2>Policy Exceptions</h2>
 
       <div style={{ marginBottom: "20px" }}>
         <input
           type="text"
-          placeholder="Search by reason"
+          placeholder="Search by title"
           value={search}
           onChange={(e) => {
             setSearch(e.target.value);
@@ -116,7 +120,7 @@ function ExceptionList() {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Reason</th>
+            <th>Title</th>
             <th>Status</th>
             <th>Risk Level</th>
             <th>Action</th>
@@ -132,7 +136,7 @@ function ExceptionList() {
             exceptions.map((item) => (
               <tr key={item.id}>
                 <td>{item.id}</td>
-                <td>{item.reason}</td>
+                <td>{item.title}</td>
                 <td>{item.status}</td>
                 <td>{item.riskLevel || "LOW"}</td>
 
