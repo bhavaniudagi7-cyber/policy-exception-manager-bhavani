@@ -52,6 +52,8 @@ Validation:
 - Demo version uses simplified authentication.
 - Production deployment should use stronger JWT secret management.
 - Production deployment should disable Swagger if not required.
+- Injection-style inputs should be blocked with stronger backend validation       before production deployment.
+- Current demo version documents this as a production hardening requirement.
 
 ## Final Security Status
 No critical or high-priority security issues are open. The project is ready for Demo Day presentation.
